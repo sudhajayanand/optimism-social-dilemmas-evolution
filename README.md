@@ -107,9 +107,9 @@ Iterated Prisoner's Dilemma (IPD) and compare the result with the individual cas
 | `03_robustness_and_controls.ipynb` | Noise × temptation sweep; controls; starting-value sensitivity; original vs corrected settings; payoff scaling × β; learning-rate distributions |
 | `mechanism.py` | Expectiles and invasion analysis (test agents with chosen τ against an evolved population) |
 | `04_mechanism_expectiles.ipynb` | Why temptation changes which bias evolves: expectiles, fitness landscapes |
-| `results/sweep.csv`, `results/controls.csv`, `results/payoff_scaling.csv` | Results |
 
-Each notebook is self-contained, so it runs in Google Colab without uploading other files.
+Each notebook is self-contained, so it runs in Google Colab without uploading other files. All numbers and figures are shown in the
+executed notebooks; running them also writes the results as CSV files to `results/`.
 
 ## Note on a methodological correction
 My first version of this project reported the opposite headline: optimism evolved in the
