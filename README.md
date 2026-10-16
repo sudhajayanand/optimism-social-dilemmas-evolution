@@ -15,27 +15,30 @@ Iterated Prisoner's Dilemma (IPD) and compare the result with the individual cas
 
 ## Main results (preliminary)
 1. **Replication:** when agents learn alone (2-armed bandit, myopic), an **optimism bias evolves**
-   (optimism index +0.56 ± 0.02 over 20 runs; α⁺ ≈ 0.60, α⁻ ≈ 0.17), consistent with Hoxha et al.
-   (2025). It holds for every starting value tested (+0.31 to +0.59) and is strongest when starting values are neutral.
+   (optimism index +0.56 ± 0.02; α⁺ ≈ 0.60, α⁻ ≈ 0.17), consistent with Hoxha et al. (2025).
+   It holds for every starting value tested (+0.31 to +0.56) and is strongest when starting values
+   are neutral.
 2. **Extension:** I compare agents with the same farsightedness (γ = 0.9), learning either a fixed
    bandit or against other learners in the IPD:
-   - **Against other learners, optimism evolves more strongly** (+0.79 vs +0.22). Over 20 runs,
-     the IPD reaches +0.80 ± 0.01 (noise 0.05) and +0.82 ± 0.01 (no noise), driven mainly by a very
-     low learning rate for negative prediction errors (α⁻ ≈ 0.10, α⁺ ≈ 0.82).
-   - **It is also more robust.** In the IPD it holds for every starting value tested (+0.68 to +0.82).
+   - **Against other learners, optimism evolves more strongly:** +0.80 ± 0.01 vs +0.27 ± 0.06
+     (noise 0.05, T = 5). This is driven mainly by a very low learning rate for negative prediction
+     errors (α⁻ ≈ 0.10, α⁺ ≈ 0.82).
+   - **It is also more robust.** In the IPD it holds for every starting value tested (+0.71 to +0.82).
      In the farsighted bandit it disappears when agents start out over-expecting.
-   - **Myopic agents (γ = 0) in the IPD stay neutral** (+0.08; α⁺ ≈ α⁻ ≈ 0.73). This is expected:
-     defection pays more than cooperation whatever the partner does, so the learning bias barely
-     changes behaviour.
+   - **Myopic agents (γ = 0) in the IPD stay close to neutral** (+0.16 ± 0.09; α⁺ ≈ 0.76,
+     α⁻ ≈ 0.68). This is expected: defection pays more than cooperation whatever the partner does,
+     so the learning bias barely changes behaviour.
 3. **The temptation to defect matters:**
-   - **High temptation (T ≥ 5):** optimism evolves at every noise level (+0.72 to +0.85).
-   - **Low temptation (T = 3.5):** optimism disappears. With high noise, a **pessimism bias**
-     evolves (≈ −0.36, α⁺ ≈ 0.43, α⁻ ≈ 0.81; −0.26 to −0.36 across starting values).
+   - **High temptation (T ≥ 5):** optimism evolves at every noise level (+0.73 to +0.84).
+   - **Intermediate temptation (T = 4):** optimism weakens as noise rises (+0.57 → +0.17).
+   - **Low temptation (T = 3.5):** optimism disappears, and a **pessimism bias** grows with noise
+     (+0.06 without noise → −0.18 at 10% → −0.26 ± 0.06 at 20%; α⁺ ≈ 0.46, α⁻ ≈ 0.73). At 20%
+     noise it holds across starting values (−0.26 to −0.34).
    - **The effect survives a fixed payoff scale.** With payoffs divided by a constant, T = 5 stays
-     optimistic for every β tested (+0.44 to +0.85), while T = 3.5 never exceeds +0.12. So the
-     effect reflects the payoff structure, not just a change in exploration.
-   - **The size of the pessimism depends on choice noise:** −0.52 for decisive agents (β = 20)
-     vs +0.12 for exploratory ones (β = 5).
+     optimistic for every β tested (+0.47 to +0.85), while T = 3.5 is pessimistic for every β
+     (−0.08 to −0.39). So the effect reflects the payoff structure, not a change in exploration.
+   - **The size of the pessimism depends on choice noise:** at 20% noise, −0.39 for decisive
+     agents (β = 20) vs −0.08 for exploratory ones (β = 5).
 4. **Mechanism: optimism favours the riskier action, and temptation decides which action that is.**
    - With asymmetric learning rates, values converge to an **expectile** of the outcomes at level
      τ = α⁺/(α⁺ + α⁻), not to the mean (Palminteri & Lebreton, 2022). I confirm this in simulation:
@@ -45,7 +48,7 @@ Iterated Prisoner's Dilemma (IPD) and compare the result with the individual cas
      - cooperating ranges from S to R (gap R − S = 3);
      - defecting ranges from P to T (gap T − P = T − 1).
      - Defecting is the riskier action when T > 4, cooperating when T < 4. This matches the sweep:
-       strong optimism for T ≥ 5, none or pessimism at T = 3.5, and intermediate, noisy values at T = 4.
+       strong optimism for T ≥ 5, none or pessimism at T = 3.5, and intermediate values at T = 4.
    - **Fitness landscapes.** Test agents with every τ played against the evolved populations:
      - At high temptation (T = 5), payoff rises steadily with τ and peaks at τ = 0.90, matching the
        residents (0.91). The evolved optimism is stable: no other bias does better.
@@ -59,7 +62,7 @@ Iterated Prisoner's Dilemma (IPD) and compare the result with the individual cas
      rises, defecting looks relatively better at T = 5 and cooperating looks relatively better at
      T = 3.5, although defecting looks better on average at every τ in both worlds.
 5. **Populations are unimodal, not mixtures.** At T = 5, 100% of evolved agents are optimistic.
-   At T = 3.5 with high noise, 92% are pessimistic. Optimism comes mainly from a very low α⁻;
+   At T = 3.5 with high noise, 79% are pessimistic. Optimism comes mainly from a very low α⁻;
    pessimism from a very high α⁻.
 6. **Controls and cooperation:**
    - A neutral-drift control (random fitness) gives ≈ 0, so the evolved biases reflect selection.
@@ -92,8 +95,7 @@ Iterated Prisoner's Dilemma (IPD) and compare the result with the individual cas
   - Rank-based Wright–Fisher selection; offspring inherit (α⁺, α⁻) + Gaussian mutation (sd = 0.03).
   - Initial α⁺, α⁻ ~ Uniform(0.05, 0.95).
 - **Optimism index:** (α⁺ − α⁻) / (α⁺ + α⁻), averaged over the last 30 generations;
-  20 independent runs per condition for the main comparison (notebook 02), 6 for the robustness
-  analyses (notebook 03).
+  20 independent runs per condition (± values are standard errors across runs).
 
 ## Repository
 | File | Contents |
@@ -128,7 +130,7 @@ neutral-drift control and a starting-value sensitivity analysis, and re-ran ever
 The results above are from the corrected model.
 
 ## Limitations and next steps
-- Simple agents (one-move memory), small populations, 6 runs per condition in the robustness analyses.
+- Simple agents (one-move memory) and small populations (100 agents).
 - Agents choose fairly exploratorily (≈ 40–46% cooperation everywhere), so learning biases shift
   behaviour by only a few percentage points; evolution amplifies these small differences.
 - The mechanism analysis uses the outcomes experienced by unbiased test agents and one-round
